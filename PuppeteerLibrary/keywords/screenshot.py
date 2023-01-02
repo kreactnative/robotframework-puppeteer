@@ -42,7 +42,7 @@ class ScreenshotKeywords(LibraryComponent):
         self.loop.run_until_complete(self.get_async_keyword_group().capture_page_screenshot(path, bool(fullPage)))
         #self._embed_to_log_as_file(path, 800)
         base64 = self._convert_base64(get_link_path(path, os.curdir))
-        self._embed_to_log_as_base64(base64,2560)
+        self._embed_to_log_as_base64(base64,1024)
     
     def _get_screenshot_path(self, filename):
         directory = self.ctx.get_current_library_context().get_screenshot_path()
