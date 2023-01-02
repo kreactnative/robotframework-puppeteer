@@ -41,7 +41,7 @@ class ScreenshotKeywords(LibraryComponent):
         #path = self._get_screenshot_path(filename)
         #self.loop.run_until_complete(self.get_async_keyword_group().capture_page_screenshot(path, bool(fullPage)))
         #self._embed_to_log_as_file(path, 800)
-        self._capture_page_screen_to_log()
+        self._capture_element_screen_to_log()
 
     def _capture_element_screen_to_log(self, element):
         self._embed_to_log_as_base64(element.screenshot_as_base64, 400)
