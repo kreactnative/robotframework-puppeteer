@@ -61,7 +61,7 @@ class ScreenshotKeywords(LibraryComponent):
     def _convert_base64(self,file_path):
         with open(file_path, "rb") as img_file:
             b64_string = base64.b64encode(img_file.read())
-        return b64_string
+        return b64_string.decode('utf-8')
 
     def _embed_to_log_as_file(self, path, width):
         """
