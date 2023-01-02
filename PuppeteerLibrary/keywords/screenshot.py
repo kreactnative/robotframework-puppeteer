@@ -38,8 +38,8 @@ class ScreenshotKeywords(LibraryComponent):
         | Capture page screenshot   | custom-{index}.png |
 
         """
-        path = self._get_screenshot_path(filename)
-        self.loop.run_until_complete(self.get_async_keyword_group().capture_page_screenshot(path, bool(fullPage)))
+        #path = self._get_screenshot_path(filename)
+        #self.loop.run_until_complete(self.get_async_keyword_group().capture_page_screenshot(path, bool(fullPage)))
         #self._embed_to_log_as_file(path, 800)
         self._capture_page_screen_to_log()
 
