@@ -25,18 +25,7 @@ class ScreenshotKeywords(LibraryComponent):
     @keyword
     def capture_page_screenshot(self, filename=DEFAULT_FILENAME_PAGE, fullPage=False):
         """
-        Capture current web page as image png file.
-
-        The ``filename`` argument specifies filename and path to save the file.
-        Default valid is 'puppeteer-screenshot-{index}.png'.
-        
-        The ``fullPage`` argument specifieds capture screenshot as full page.
-
-        Example:
-
-        | Capture page screenshot   |                    |
-        | Capture page screenshot   | custom-{index}.png |
-
+        Capture current web page as base64.
         """
         path = self._get_screenshot_path(filename)
         self.loop.run_until_complete(self.get_async_keyword_group().capture_page_screenshot(path, bool(fullPage)))
