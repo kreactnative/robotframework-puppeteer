@@ -1,4 +1,5 @@
 import os
+import base64
 from robot.utils import get_link_path
 from PuppeteerLibrary.base.librarycomponent import LibraryComponent
 from PuppeteerLibrary.base.robotlibcore import keyword
@@ -39,7 +40,9 @@ class ScreenshotKeywords(LibraryComponent):
         """
         path = self._get_screenshot_path(filename)
         self.loop.run_until_complete(self.get_async_keyword_group().capture_page_screenshot(path, bool(fullPage)))
-        self._embed_to_log_as_file(path, 800)
+        #self._embed_to_log_as_file(path, 800)
+        base64 = self._convert_base64(get_link_path(path, os.curdir))
+        self._embed_to_log_as_base64(base64)
     
     def _get_screenshot_path(self, filename):
         directory = self.ctx.get_current_library_context().get_screenshot_path()
@@ -55,6 +58,11 @@ class ScreenshotKeywords(LibraryComponent):
     def _format_path(self, file_path, index):
         return file_path.format_map(_SafeFormatter(index=index))
 
+    def _convert_base64(self,file_path):
+        with open(file_path, "rb") as img_file:
+            b64_string = base64.b64encode(img_file.read())
+        return b64_string
+
     def _embed_to_log_as_file(self, path, width):
         """
         Image is shown on its own row and thus previous row is closed on purpose.
@@ -64,6 +72,16 @@ class ScreenshotKeywords(LibraryComponent):
         self.info('</td></tr><tr><td colspan="3">'
                   '<a href="{src}"><img src="{src}" width="{width}px"></a>'
                   .format(src=get_link_path(path, os.curdir), width=width), html=True)
+
+    def _embed_to_log_as_base64(self, screenshot_as_base64, width):
+        # base64 image is shown as on its own row and thus previous row is closed on
+        # purpose. Depending on Robot's log structure is a bit risky.
+        self.info(
+            '</td></tr><tr><td colspan="3">'
+            '<img alt="screenshot" class="robot-seleniumlibrary-screenshot" '
+            f'src="data:image/png;base64,{screenshot_as_base64}" width="{width}px">',
+            html=True,
+        )
 
 class _SafeFormatter(dict):
 
